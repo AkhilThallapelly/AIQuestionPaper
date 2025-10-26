@@ -1,6 +1,6 @@
 {
   "name": "question-paper-generator-frontend",
-  "homepage": "https://akhilthallapelly.github.io/AIQuestionPaper",
+  "homepage": ".",
   "version": "1.0.0",
   "description": "React frontend for AI Question Paper Generator",
   "private": true,
