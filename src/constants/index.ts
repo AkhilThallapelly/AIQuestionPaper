@@ -118,6 +118,7 @@ export const API_CONFIG = {
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1',
   // In production, update this with your backend URL:
   // baseURL: 'https://your-backend-domain.com/api/v1',
+  //
   timeout: 120000, // 2 minutes - increased for AI generation
 } as const;
 
