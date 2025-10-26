@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/AIQuestionPaper/static/css/main.fa2a3ce9.css",
+    "main.js": "/AIQuestionPaper/static/js/main.4153b078.js",
+    "static/js/239.9460c1ec.chunk.js": "/AIQuestionPaper/static/js/239.9460c1ec.chunk.js",
+    "static/js/213.67c444b4.chunk.js": "/AIQuestionPaper/static/js/213.67c444b4.chunk.js",
+    "static/js/455.05b9bd9f.chunk.js": "/AIQuestionPaper/static/js/455.05b9bd9f.chunk.js",
+    "index.html": "/AIQuestionPaper/index.html",
+    "main.fa2a3ce9.css.map": "/AIQuestionPaper/static/css/main.fa2a3ce9.css.map",
+    "main.4153b078.js.map": "/AIQuestionPaper/static/js/main.4153b078.js.map",
+    "239.9460c1ec.chunk.js.map": "/AIQuestionPaper/static/js/239.9460c1ec.chunk.js.map",
+    "213.67c444b4.chunk.js.map": "/AIQuestionPaper/static/js/213.67c444b4.chunk.js.map",
+    "455.05b9bd9f.chunk.js.map": "/AIQuestionPaper/static/js/455.05b9bd9f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fa2a3ce9.css",
+    "static/js/main.4153b078.js"
+  ]
+}
