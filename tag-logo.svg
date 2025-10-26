@@ -1,0 +1,40 @@
+<svg width="88" height="40" viewBox="0 0 88 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradientT" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00C5FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077CC;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradientA" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0077CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B46C1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradientG" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6B46C1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9333EA;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Letter T -->
+  <g>
+    <rect x="8" y="6" width="24" height="28" fill="url(#gradientT)" rx="3"/>
+    <rect x="14" y="6" width="12" height="28" fill="url(#gradientT)" rx="2"/>
+    <!-- Circuit pattern on T -->
+    <path d="M16 8 L20 8 M16 12 L18 12 M20 10 L24 10" stroke="white" stroke-width="1.5" fill="none"/>
+    <path d="M16 16 L22 16 M18 14 L18 18" stroke="white" stroke-width="1.5" fill="none"/>
+  </g>
+  
+  <!-- Letter A -->
+  <g transform="translate(28,0)">
+    <path d="M 12 32 L 20 4 L 28 32 Z M 16 24 L 24 24" stroke="url(#gradientA)" fill="url(#gradientA)" stroke-width="1" stroke-linejoin="round"/>
+    <path d="M 12 32 L 20 8 L 28 32" fill="url(#gradientA)"/>
+    <path d="M 16 22 L 24 22" stroke="url(#gradientA)" stroke-width="3"/>
+  </g>
+  
+  <!-- Letter G -->
+  <g transform="translate(54,0)">
+    <path d="M 8 8 Q 8 6 10 6 L 24 6 Q 28 6 28 10 L 28 18 Q 28 20 26 20 L 18 20 L 18 26 Q 18 28 20 28 L 26 28 Q 28 28 28 30 L 28 32 Q 28 34 26 34 L 10 34 Q 8 34 8 32 L 8 32 Q 8 24 8 16 Z" fill="url(#gradientG)"/>
+    <!-- Circuit pattern on G -->
+    <path d="M 20 12 L 24 12 M 20 16 L 24 16 M 20 18 L 26 18" stroke="white" stroke-width="1.5" fill="none"/>
+    <path d="M 12 20 L 16 20 M 12 28 L 18 28" stroke="white" stroke-width="1.5" fill="none"/>
+  </g>
+</svg>
