@@ -1,0 +1,62 @@
+{
+  "name": "question-paper-generator-frontend",
+  "version": "1.0.0",
+  "description": "React frontend for AI Question Paper Generator",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/material": "^5.15.0",
+    "@mui/x-data-grid": "^6.18.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^20.9.0",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.6.2",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.48.2",
+    "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^7.9.4",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.55.0"
+  },
+  "scripts": {
+    "start": "PORT=3004 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:8000"
+}
