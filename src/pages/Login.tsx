@@ -11,8 +11,16 @@ import {
   Alert,
   CircularProgress,
   Avatar,
+  InputAdornment,
+  IconButton,   
 } from "@mui/material";
-import { School, Lock, Login as LoginIcon } from "@mui/icons-material";
+import { 
+  School, 
+  Lock, 
+  Login as LoginIcon, 
+  Visibility,     
+  VisibilityOff  
+} from "@mui/icons-material";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { API_CONFIG } from "../constants";
@@ -35,6 +43,8 @@ const LoginPage = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
+  const [showPassword, setShowPassword] = useState(false); 
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +75,17 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+  
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+  
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
 
   return (
     <Container maxWidth="sm">
@@ -147,7 +168,7 @@ const LoginPage = () => {
 
               <TextField
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"} 
                 fullWidth
                 required
                 margin="normal"
@@ -159,6 +180,19 @@ const LoginPage = () => {
                 InputProps={{
                   startAdornment: (
                     <Lock sx={{ mr: 1, color: "text.secondary" }} />
+                  ),
+                  endAdornment: ( 
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        disabled={loading}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
                   ),
                 }}
               />
@@ -199,4 +233,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
