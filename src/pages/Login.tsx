@@ -12,27 +12,17 @@ import {
   CircularProgress,
   Avatar,
   InputAdornment,
-  IconButton,   
+  IconButton,
 } from "@mui/material";
-import { 
-  School, 
-  Lock, 
-  Login as LoginIcon, 
-  Visibility,     
-  VisibilityOff  
+import {
+  School,
+  Lock,
+  Login as LoginIcon,
+  Visibility,
+  VisibilityOff,
 } from "@mui/icons-material";
-import axios from "axios";
 import toast from "react-hot-toast";
-import { API_CONFIG } from "../constants";
-
-interface SchoolData {
-  username: string;
-  school_name: string;
-  principal_name: string;
-  board: string;
-  address: string;
-  is_active: boolean;
-}
+import { login as loginApi, SchoolData } from "../services/authApi";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -43,8 +33,8 @@ const LoginPage = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
-  const [showPassword, setShowPassword] = useState(false); 
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,40 +42,35 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        `${API_CONFIG.baseURL}/auth/login`,
-        credentials
-      );
+      const response = await loginApi(credentials);
 
-      if (response.data.success) {
-        const schoolData: SchoolData = response.data.school;
-        
+      if (response.success) {
+        const schoolData: SchoolData = response.school;
+
         // Use the login function from AuthContext to update state
         login(schoolData);
-        
+
         toast.success(`Welcome, ${schoolData.school_name}!`);
         navigate("/");
       }
     } catch (err: any) {
-      const errorMessage =
-        err.response?.data?.detail || "Failed to login. Please try again.";
+      const errorMessage = err.message || "Failed to login. Please try again.";
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
-  
+
   const handleClickShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
-  
+
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };
-
 
   return (
     <Container maxWidth="sm">
@@ -105,12 +90,18 @@ const LoginPage = () => {
             p: 4,
             width: "100%",
             borderRadius: 2,
-            background:
-              "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
             color: "white",
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 3 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mb: 3,
+            }}
+          >
             <Avatar
               sx={{
                 width: 80,
@@ -121,7 +112,12 @@ const LoginPage = () => {
             >
               <School sx={{ fontSize: 40 }} />
             </Avatar>
-            <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              fontWeight="bold"
+            >
               AI Question Paper Generator
             </Typography>
             <Typography variant="subtitle1" sx={{ opacity: 0.9 }}>
@@ -139,7 +135,11 @@ const LoginPage = () => {
             }}
           >
             <form onSubmit={handleLogin}>
-              <Typography variant="h6" gutterBottom sx={{ mb: 3, fontWeight: "bold" }}>
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{ mb: 3, fontWeight: "bold" }}
+              >
                 Login to Your Account
               </Typography>
 
@@ -168,7 +168,7 @@ const LoginPage = () => {
 
               <TextField
                 label="Password"
-                type={showPassword ? "text" : "password"} 
+                type={showPassword ? "text" : "password"}
                 fullWidth
                 required
                 margin="normal"
@@ -181,7 +181,7 @@ const LoginPage = () => {
                   startAdornment: (
                     <Lock sx={{ mr: 1, color: "text.secondary" }} />
                   ),
-                  endAdornment: ( 
+                  endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
@@ -203,14 +203,18 @@ const LoginPage = () => {
                 variant="contained"
                 size="large"
                 disabled={loading}
-                startIcon={loading ? <CircularProgress size={20} /> : <LoginIcon />}
+                startIcon={
+                  loading ? <CircularProgress size={20} /> : <LoginIcon />
+                }
                 sx={{
                   mt: 3,
                   mb: 2,
                   py: 1.5,
-                  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                   "&:hover": {
-                    background: "linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%)",
+                    background:
+                      "linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%)",
                   },
                 }}
               >

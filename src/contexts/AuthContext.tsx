@@ -1,6 +1,11 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import axios from "axios";
-import { API_CONFIG } from "../constants";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { verifySession as verifySessionApi } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 
 interface SchoolData {
@@ -25,7 +30,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [schoolData, setSchoolData] = useState<SchoolData | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -76,15 +83,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/auth/verify`,
-        {
-          params: { username: schoolData.username },
-        }
-      );
+      const response = await verifySessionApi(schoolData.username);
 
-      if (response.data.success) {
-        login(response.data.school);
+      if (response.success) {
+        login(response.school);
       } else {
         logout();
       }
@@ -118,4 +120,3 @@ export const useAuth = () => {
   }
   return context;
 };
-

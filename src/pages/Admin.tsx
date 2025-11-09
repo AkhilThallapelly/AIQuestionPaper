@@ -26,14 +26,14 @@ import {
   Box,
   Chip,
 } from "@mui/material";
-import {
-  Add,
-  Delete,
-  Visibility,
-} from "@mui/icons-material";
-import axios from "axios";
+import { Add, Delete, Visibility } from "@mui/icons-material";
 import toast from "react-hot-toast";
-import { API_CONFIG } from "../constants";
+import {
+  addSchool,
+  listSchools,
+  deleteSchool,
+  AddSchoolRequest,
+} from "../services/authApi";
 import { useAuth } from "../contexts/AuthContext";
 
 interface School {
@@ -42,7 +42,7 @@ interface School {
   principal_name: string;
   board: string;
   address: string;
-  created_at: string;
+  created_at?: string;
   is_active: boolean;
 }
 
@@ -67,22 +67,28 @@ const Admin = () => {
 
   const loadSchools = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/auth/schools`);
-      setSchools(response.data.schools);
+      const response = await listSchools();
+      setSchools(response.schools);
     } catch (error: any) {
       console.error("Error loading schools:", error);
-      toast.error("Failed to load schools");
+      toast.error(error.message || "Failed to load schools");
     }
   };
 
   const handleAddSchool = async () => {
     try {
-      const response = await axios.post(
-        `${API_CONFIG.baseURL}/auth/add-school`,
-        newSchool
-      );
+      const schoolData: AddSchoolRequest = {
+        username: newSchool.username,
+        password: newSchool.password,
+        school_name: newSchool.school_name,
+        principal_name: newSchool.principal_name,
+        board: newSchool.board,
+        address: newSchool.address,
+      };
 
-      if (response.data.success) {
+      const response = await addSchool(schoolData);
+
+      if (response.success) {
         toast.success("School added successfully!");
         setAddDialogOpen(false);
         setNewSchool({
@@ -97,17 +103,15 @@ const Admin = () => {
       }
     } catch (error: any) {
       console.error("Error adding school:", error);
-      toast.error(error.response?.data?.detail || "Failed to add school");
+      toast.error(error.message || "Failed to add school");
     }
   };
 
   const handleDeleteSchool = async () => {
     try {
-      const response = await axios.delete(
-        `${API_CONFIG.baseURL}/auth/schools/${schoolToDelete}`
-      );
+      const response = await deleteSchool(schoolToDelete);
 
-      if (response.data.success) {
+      if (response.success) {
         toast.success("School deleted successfully!");
         setDeleteDialogOpen(false);
         setSchoolToDelete("");
@@ -115,7 +119,7 @@ const Admin = () => {
       }
     } catch (error: any) {
       console.error("Error deleting school:", error);
-      toast.error(error.response?.data?.detail || "Failed to delete school");
+      toast.error(error.message || "Failed to delete school");
     }
   };
 
@@ -145,7 +149,14 @@ const Admin = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 3,
+        }}
+      >
         <Typography variant="h4" component="h1">
           School Administration
         </Typography>
@@ -182,7 +193,9 @@ const Admin = () => {
                   <TableCell>{school.principal_name}</TableCell>
                   <TableCell>{school.board}</TableCell>
                   <TableCell>{school.address}</TableCell>
-                  <TableCell>{formatDate(school.created_at)}</TableCell>
+                  <TableCell>
+                    {school.created_at ? formatDate(school.created_at) : "N/A"}
+                  </TableCell>
                   <TableCell>
                     <Chip
                       label={school.is_active ? "Active" : "Inactive"}
@@ -208,14 +221,21 @@ const Admin = () => {
       </TableContainer>
 
       {/* Add School Dialog */}
-      <Dialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={addDialogOpen}
+        onClose={() => setAddDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Add New School</DialogTitle>
         <DialogContent>
           <TextField
             fullWidth
             label="Username"
             value={newSchool.username}
-            onChange={(e) => setNewSchool({ ...newSchool, username: e.target.value })}
+            onChange={(e) =>
+              setNewSchool({ ...newSchool, username: e.target.value })
+            }
             margin="normal"
             required
           />
@@ -224,7 +244,9 @@ const Admin = () => {
             label="Password"
             type="password"
             value={newSchool.password}
-            onChange={(e) => setNewSchool({ ...newSchool, password: e.target.value })}
+            onChange={(e) =>
+              setNewSchool({ ...newSchool, password: e.target.value })
+            }
             margin="normal"
             required
           />
@@ -232,7 +254,9 @@ const Admin = () => {
             fullWidth
             label="School Name"
             value={newSchool.school_name}
-            onChange={(e) => setNewSchool({ ...newSchool, school_name: e.target.value })}
+            onChange={(e) =>
+              setNewSchool({ ...newSchool, school_name: e.target.value })
+            }
             margin="normal"
             required
           />
@@ -240,7 +264,9 @@ const Admin = () => {
             fullWidth
             label="Principal Name"
             value={newSchool.principal_name}
-            onChange={(e) => setNewSchool({ ...newSchool, principal_name: e.target.value })}
+            onChange={(e) =>
+              setNewSchool({ ...newSchool, principal_name: e.target.value })
+            }
             margin="normal"
             required
           />
@@ -248,7 +274,9 @@ const Admin = () => {
             <InputLabel>Board</InputLabel>
             <Select
               value={newSchool.board}
-              onChange={(e) => setNewSchool({ ...newSchool, board: e.target.value })}
+              onChange={(e) =>
+                setNewSchool({ ...newSchool, board: e.target.value })
+              }
               label="Board"
             >
               <MenuItem value="CBSE">CBSE</MenuItem>
@@ -262,7 +290,9 @@ const Admin = () => {
             multiline
             rows={3}
             value={newSchool.address}
-            onChange={(e) => setNewSchool({ ...newSchool, address: e.target.value })}
+            onChange={(e) =>
+              setNewSchool({ ...newSchool, address: e.target.value })
+            }
             margin="normal"
             required
           />
@@ -276,16 +306,24 @@ const Admin = () => {
       </Dialog>
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+      >
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <Typography>
-            Are you sure you want to delete this school? This action cannot be undone.
+            Are you sure you want to delete this school? This action cannot be
+            undone.
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleDeleteSchool} color="error" variant="contained">
+          <Button
+            onClick={handleDeleteSchool}
+            color="error"
+            variant="contained"
+          >
             Delete
           </Button>
         </DialogActions>
@@ -295,4 +333,3 @@ const Admin = () => {
 };
 
 export default Admin;
-
