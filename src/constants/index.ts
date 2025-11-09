@@ -115,7 +115,7 @@ export const VALIDATION_RULES = {
 
 // API Configuration
 export const API_CONFIG = {
-  baseURL: process.env.REACT_APP_API_URL, //|| "http://localhost:8000/api/v1",
+  baseURL: "https://aiqpbackend-app-62oln.ondigitalocean.app/", //process.env.REACT_APP_API_URL, //|| "http://localhost:8000/api/v1",
   // For production, set REACT_APP_API_URL in GitHub Secrets (for GitHub Pages)
   // or in your build environment (for Digital Ocean frontend deployment)
   // Example: https://your-app-name.ondigitalocean.app/api/v1
